@@ -3,16 +3,25 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Player } from '@/types/game';
-import { Trophy, Sparkles, RotateCcw } from 'lucide-react';
+import { Trophy, Sparkles, RotateCcw, BadgeIndianRupee } from 'lucide-react';
 
 interface WinnerModalProps {
   isOpen: boolean;
   winner: Player | null;
   onClose: () => void;
   onPlayAgain: () => void;
+  winningAmount?: number;
+  currency?: string;
 }
 
-const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, winner, onClose, onPlayAgain }) => {
+const WinnerModal: React.FC<WinnerModalProps> = ({ 
+  isOpen, 
+  winner, 
+  onClose, 
+  onPlayAgain,
+  winningAmount,
+  currency
+}) => {
   if (!winner) return null;
 
   const handlePlayAgain = () => {
@@ -48,6 +57,20 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, winner, onClose, onPl
             </p>
           </div>
 
+          {winningAmount && currency && (
+            <div className="bg-gradient-to-r from-green-100 to-emerald-100 p-6 rounded-lg border-2 border-green-200">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <BadgeIndianRupee className="w-8 h-8 text-green-600" />
+                <span className="text-3xl font-bold text-green-600">
+                  {currency}{winningAmount}
+                </span>
+              </div>
+              <p className="text-green-700 font-medium">
+                💰 You've won the prize money! 💰
+              </p>
+            </div>
+          )}
+
           <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-lg">
             <p className="text-lg font-medium text-purple-800">
               Victory achieved! 
@@ -63,7 +86,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, winner, onClose, onPl
               className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white py-3"
             >
               <RotateCcw className="w-5 h-5 mr-2" />
-              Play Again
+              Play New Challenge
             </Button>
             
             <Button 

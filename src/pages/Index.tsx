@@ -5,7 +5,8 @@ import PlayerPanel from '@/components/PlayerPanel';
 import GameControls from '@/components/GameControls';
 import WinnerModal from '@/components/WinnerModal';
 import GameStats from '@/components/GameStats';
-import { GameState, Player, Position } from '@/types/game';
+import ChallengeSelector from '@/components/ChallengeSelector';
+import { GameState, Player, CHALLENGES } from '@/types/game';
 
 const Index = () => {
   const [gameState, setGameState] = useState<GameState>({
@@ -20,16 +21,28 @@ const Index = () => {
     gameStarted: false,
     winner: null,
     totalMoves: 0,
-    gameHistory: []
+    gameHistory: [],
+    selectedChallenge: null
   });
 
   const [showWinnerModal, setShowWinnerModal] = useState(false);
+  const [showChallengeSelector, setShowChallengeSelector] = useState(true);
 
   useEffect(() => {
     if (gameState.winner) {
       setShowWinnerModal(true);
     }
   }, [gameState.winner]);
+
+  const handleSelectChallenge = (challenge: any) => {
+    setGameState(prev => ({ ...prev, selectedChallenge: challenge }));
+  };
+
+  const handleStartGame = () => {
+    if (gameState.selectedChallenge) {
+      setShowChallengeSelector(false);
+    }
+  };
 
   const resetGame = () => {
     setGameState({
@@ -44,10 +57,36 @@ const Index = () => {
       gameStarted: false,
       winner: null,
       totalMoves: 0,
-      gameHistory: []
+      gameHistory: [],
+      selectedChallenge: null
     });
     setShowWinnerModal(false);
+    setShowChallengeSelector(true);
   };
+
+  if (showChallengeSelector) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-green-100 p-4">
+        <div className="max-w-6xl mx-auto">
+          <header className="text-center mb-8">
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-red-500 via-blue-500 via-yellow-500 to-green-500 bg-clip-text text-transparent animate-fade-in">
+              🎲 Ludo Game 🎮
+            </h1>
+            <p className="text-xl text-gray-600 mt-2 animate-fade-in">
+              Classic Board Game • 4 Players • Strategic Fun • Real Money Challenges
+            </p>
+          </header>
+
+          <ChallengeSelector
+            challenges={CHALLENGES}
+            selectedChallenge={gameState.selectedChallenge}
+            onSelectChallenge={handleSelectChallenge}
+            onStartGame={handleStartGame}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-green-100 p-4">
@@ -59,6 +98,14 @@ const Index = () => {
           <p className="text-xl text-gray-600 mt-2 animate-fade-in">
             Classic Board Game • 4 Players • Strategic Fun
           </p>
+          {gameState.selectedChallenge && (
+            <div className="mt-4 inline-block bg-white px-4 py-2 rounded-lg shadow-md">
+              <span className="text-sm text-gray-600">Playing: </span>
+              <span className="font-bold text-purple-600">{gameState.selectedChallenge.name}</span>
+              <span className="text-sm text-gray-600"> | Win: </span>
+              <span className="font-bold text-green-600">{gameState.selectedChallenge.currency}{gameState.selectedChallenge.winningAmount}</span>
+            </div>
+          )}
         </header>
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
@@ -89,6 +136,8 @@ const Index = () => {
           winner={gameState.winner}
           onClose={() => setShowWinnerModal(false)}
           onPlayAgain={resetGame}
+          winningAmount={gameState.selectedChallenge?.winningAmount}
+          currency={gameState.selectedChallenge?.currency}
         />
       </div>
     </div>
