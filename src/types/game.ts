@@ -59,7 +59,7 @@ export const CHALLENGES: Challenge[] = [
     entryFee: 0,
     winningAmount: 0,
     currency: '₹',
-    participants: 1,
+    participants: 2,
     maxParticipants: 4,
     difficulty: 'Easy'
   },
@@ -89,7 +89,7 @@ export const CHALLENGES: Challenge[] = [
     entryFee: 10,
     winningAmount: 18,
     currency: '₹',
-    participants: 1,
+    participants: 2,
     maxParticipants: 4,
     difficulty: 'Medium'
   },
@@ -109,7 +109,7 @@ export const CHALLENGES: Challenge[] = [
     entryFee: 50,
     winningAmount: 90,
     currency: '₹',
-    participants: 1,
+    participants: 2,
     maxParticipants: 4,
     difficulty: 'Hard'
   },
@@ -119,7 +119,7 @@ export const CHALLENGES: Challenge[] = [
     entryFee: 100,
     winningAmount: 180,
     currency: '₹',
-    participants: 0,
+    participants: 2,
     maxParticipants: 4,
     difficulty: 'Hard'
   }
