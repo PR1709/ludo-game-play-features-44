@@ -54,6 +54,16 @@ export const STARTING_POSITIONS = [0, 13, 26, 39];
 
 export const CHALLENGES: Challenge[] = [
   {
+    id: 'challenge-free',
+    name: 'Free Play',
+    entryFee: 0,
+    winningAmount: 0,
+    currency: '₹',
+    participants: 1,
+    maxParticipants: 4,
+    difficulty: 'Easy'
+  },
+  {
     id: 'challenge-1',
     name: 'Beginner Challenge',
     entryFee: 1,
